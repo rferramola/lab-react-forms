@@ -23,7 +23,7 @@ function App(props) {
 
   const handleEmail= (e) => setEmail(e.target.value);
 
-  const handleGraduationYear = (e) => setGraduationYear(e.target.checked);
+  const handleGraduationYear = (e) => setGraduationYear(e.target.value);
 
   const handleGraduated = (e) => setGraduated(e.target.checked);
 
