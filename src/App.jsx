@@ -6,36 +6,71 @@ import StudentCard from "./components/StudentCard";
 
 import studentsData from "./assets/students.json";
 
-function App() {
+function App(props) {
   const [students, setStudents] = useState(studentsData);
+  const [fullName, setFullName] = useState("");
+  const [image, setImage] = useState(""); 
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [graduationYear, setGraduationYear] = useState(2023); // o debería ser 2023??
+  const [graduated, setGraduated] = useState("false");
 
+  const handleFullName = (e) => setFullName(e.target.value);
 
+  const handleImage = (e) => setImage(e.target.value);
+
+  const handlePhone = (e) => setPhone(e.target.value);
+
+  const handleEmail= (e) => setEmail(e.target.value);
+
+  const handleGraduationYear = (e) => setGraduationYear(e.target.checked);
+
+  const handleGraduated = (e) => setGraduated(e.target.checked);
+
+  //no funciona de momento 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const submit = { fullName, image, phone, email, graduationYear, graduated  };
+    
+    console.log("Submitted", handleSubmit);
+    props.App(submit);
+
+    // Reset the state
+    setFullName("");
+    setImage("");
+    setPhone(0);
+    setEmail("");
+    setGraduationYear("")
+    setGraduated("")
+  }
+
+  
   return (
     <div className="App pt-20">
       <Navbar />
 
       {/* FORM */}
-      <form>
+      <form onSubmit={handleSubmit}>
         <span>Add a Student</span>
         <div>
           <label>
             Full Name
-            <input name="fullName" type="text" placeholder="Full Name" />
+            <input name="fullName" type="text" placeholder="Full Name" value={fullName} onChange={handleFullName} /> 
           </label>
 
           <label>
             Profile Image
-            <input name="image" type="url" placeholder="Profile Image" />
+            <input name="image" type="url" placeholder="Profile Image" value={image} onChange={handleImage} />
           </label>
 
           <label>
             Phone
-            <input name="phone" type="tel" placeholder="Phone" />
+            <input name="phone" type="tel" placeholder="Phone" value={phone} onChange={handlePhone} />
           </label>
 
           <label>
             Email
-            <input name="email" type="email" placeholder="Email" />
+            <input name="email" type="email" placeholder="Email" value={email} onChange={handleEmail} />
           </label>
         </div>
 
@@ -60,12 +95,13 @@ function App() {
               maxLength={4}
               min={2023}
               max={2030}
+              value={graduationYear} onChange={handleGraduationYear}
             />
           </label>
 
           <label>
             Graduated
-            <input name="graduated" type="checkbox" />
+            <input name="graduated" type="checkbox" value={graduated} onChange={handleGraduated} />
           </label>
 
           <button type="submit">Add Student</button>
