@@ -6,12 +6,13 @@ import StudentCard from "./components/StudentCard";
 
 import studentsData from "./assets/students.json";
 
-function App(props) {
+function App() {
   const [students, setStudents] = useState(studentsData);
   const [fullName, setFullName] = useState("");
   const [image, setImage] = useState(""); 
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
+  const [program, setProgram] = useState("")
   const [graduationYear, setGraduationYear] = useState(2023); // o debería ser 2023??
   const [graduated, setGraduated] = useState("false");
 
@@ -23,23 +24,29 @@ function App(props) {
 
   const handleEmail= (e) => setEmail(e.target.value);
 
+  const handleProgram = (e) => setProgram(e.target.value);
+
   const handleGraduationYear = (e) => setGraduationYear(e.target.value);
 
   const handleGraduated = (e) => setGraduated(e.target.checked);
 
-  //no funciona de momento 
+  
   const handleSubmit = (e) => {
     e.preventDefault();
-    const submit = { fullName, image, phone, email, graduationYear, graduated  };
-    
-    console.log("Submitted", handleSubmit);
-    props.App(submit);
+    //cambio de nombre de la variable.
+    const newStudent = { fullName, image, phone, email, program, graduationYear, graduated  };
+
+    // cambios después del feedback :)
+    setStudents([... students, newStudent])
+
+
 
     // Reset the state
     setFullName("");
     setImage("");
     setPhone(0);
     setEmail("");
+    setProgram("")
     setGraduationYear("")
     setGraduated("")
   }
@@ -77,7 +84,7 @@ function App(props) {
         <div>
           <label>
             Program
-            <select name="program">
+            <select name="program" value={program} onChange={handleProgram}>
               <option value="">-- None --</option>
               <option value="Web Dev">Web Dev</option>
               <option value="UXUI">UXUI</option>
